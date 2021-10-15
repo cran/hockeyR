@@ -11,14 +11,15 @@ knitr::opts_chunk$set(
 
 ## ----setup--------------------------------------------------------------------
 library(hockeyR)
+`%>%` <- magrittr::`%>%`
 
 ## ----records------------------------------------------------------------------
-get_team_records(1967) |>
-  dplyr::arrange(-w) |>
+get_team_records(1967) %>%
+  dplyr::arrange(-w) %>%
   dplyr::select(team_name, team_abbr, season, overall, w, l, otl, st_points)
 
 ## ----player stats-------------------------------------------------------------
-get_player_stats_hr(player_name = "Wayne Gretzky", season = 1982) |>
+get_player_stats_hr(player_name = "Wayne Gretzky", season = 1982) %>%
   dplyr::select(player, age, season_full, tm, gp, g, a, pts)
 
 ## ----jerseys------------------------------------------------------------------
@@ -33,13 +34,13 @@ df2 <- purrr::map2_dfr(
   )
 
 # who had the most goals?
-dplyr::arrange(df2, dplyr::desc(g)) |>
+dplyr::arrange(df2, dplyr::desc(g)) %>%
   dplyr::select(player, tm, season_full, gp, g, a, pts)
 
 ## ----plot-example-------------------------------------------------------------
 # add colors & logos
-df3 <- df2 |>
-  dplyr::group_by(player, season_full) |>
+df3 <- df2 %>%
+  dplyr::group_by(player, season_full) %>%
   # this part is just to get both of Mete's teams into one row
   dplyr::summarize(
     gp = sum(gp),
@@ -47,12 +48,12 @@ df3 <- df2 |>
     pts_gm = pts/gp,
     tm = utils::tail(tm, n=1),
     .groups = "drop"
-  ) |>
-  dplyr::mutate(player_season = glue::glue("{player}\n{season_full}")) |>
+  ) %>%
+  dplyr::mutate(player_season = glue::glue("{player}\n{season_full}")) %>%
   dplyr::left_join(team_logos_colors, by = c("tm" = "team_abbr"))
 
 # make a bar chart
-df3 |>
+df3 %>%
   ggplot2::ggplot(ggplot2::aes(stats::reorder(player_season, -pts_gm), pts_gm)) +
   ggplot2::geom_col(fill = df3$team_color1, color = df3$team_color2) +
   ggimage::geom_image(
@@ -76,23 +77,23 @@ df3 |>
        caption = "data pulled from hockey-reference.com using hockeyR")
 
 ## ----rosters------------------------------------------------------------------
-player_stats <- get_rosters(c("COL","Detroit red wings"), season = 2001, include_stats = TRUE) |>
+player_stats <- get_rosters(c("COL","Detroit red wings"), season = 2001, include_stats = TRUE) %>%
   dplyr::mutate(
     g_60 = 60 * g / toi,
     a_60 = 60 * a /toi,
     p_60 = 60 * pts / toi
-  ) |>
-  dplyr::filter(toi >= 300) |>
+  ) %>%
+  dplyr::filter(toi >= 300) %>%
   dplyr::left_join(team_logos_colors, by = "team_abbr")
 
 top_performers <- dplyr::filter(
       player_stats,
-      p_60 >= dplyr::arrange(player_stats, -p_60) |>
-        dplyr::slice(10) |>
+      p_60 >= dplyr::arrange(player_stats, -p_60) %>%
+        dplyr::slice(10) %>%
         dplyr::pull(p_60)
       )
 
-player_stats |>
+player_stats %>%
   ggplot2::ggplot(ggplot2::aes(a_60,g_60)) +
   ggplot2::geom_hline(yintercept = 60 * sum(player_stats$g) / sum(player_stats$toi),
              linetype = "dashed", color = "black") +

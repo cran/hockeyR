@@ -1,6 +1,6 @@
 Package: hockeyR
 Title: Collect and Clean Hockey Stats
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person(given = "Daniel",
            family = "Morse",
@@ -15,14 +15,14 @@ LazyData: true
 RoxygenNote: 7.1.1
 URL: https://github.com/danmorse314/hockeyR
 BugReports: https://github.com/danmorse314/hockeyR/issues
-Depends: R (>= 4.1.0)
-Imports: dplyr, glue, httr, janitor, jsonlite, lubridate, polite,
-        purrr, rvest, stringr, tidyr, utils, zoo
+Depends: R (>= 3.5.0)
+Imports: dplyr, glue, httr, janitor, jsonlite, magrittr, lubridate,
+        polite, purrr, rvest, stringr, tidyr, utils, zoo
 Suggests: ggimage, ggplot2, ggrepel, knitr, rmarkdown, scales, sportyR
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2021-09-19 07:40:03 UTC; danmo
+Packaged: 2021-10-15 07:26:59 UTC; danmo
 Author: Daniel Morse [aut, cre]
 Maintainer: Daniel Morse <danmorse8642@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-09-20 15:00:02 UTC
+Date/Publication: 2021-10-15 09:20:05 UTC

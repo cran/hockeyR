@@ -4,6 +4,14 @@
 # hockeyR <img src="man/figures/logo.png" align="right" width="25%" min-width="120px"/>
 
 <!-- badges: start -->
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/hockeyR)](https://CRAN.R-project.org/package=hockeyR)
+[![](https://img.shields.io/badge/devel%20version-0.1.0-blue.svg)](https://github.com/hockeyR)
+[![R-CMD-check](https://github.com/danmorse314/hockeyR/workflows/R-CMD-check/badge.svg)](https://github.com/danmorse314/hockeyR/actions)
+[![](https://img.shields.io/github/last-commit/danmorse314/hockeyR.svg)](https://github.com/danmorse314/hockeyR/commits/master)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/hockeyR)](https://cran.r-project.org/package=hockeyR)
+[![](https://img.shields.io/twitter/follow/danmorse_.svg?style=social)](https://twitter.com/danmorse_)
 <!-- badges: end -->
 
 This package contains various functions to scrape and clean play-by-play
@@ -17,15 +25,26 @@ including standings, player stats, and jersey number history.
 
 Before installing, confirm that your version of R is updated to at least
 4.1.0. This will ensure R can handle R’s native pipe operator `|>`,
-which was unavailable until 4.1.0. If you don’t know which version of R
-is installed, try `verson$version.string` in your R console.
+which was unavailable until 4.1.0. If you do not wish to update to R
+4.1.0, can install the development version from
+[GitHub](https://github.com/danmorse314/hockeyR) instead.
+
+If you don’t know which version of R is installed, try
+`verson$version.string` in your R console.
 
 ``` r
 version$version.string
 #> [1] "R version 4.1.0 (2021-05-18)"
 ```
 
-You can install the development version of `hockeyR` from
+Install the released version of hockeyR (requires R 4.1.0) from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("hockeyR")
+```
+
+Install the development version of `hockeyR` (requires R 3.5) from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -58,11 +77,6 @@ will get it for you.
 
 ``` r
 pbp <- load_pbp('2018-19')
-#> Fetching 2018_19 season play-by-play...
-#> Done!
-#> Loaded 1271 regular season games & 87 postseason games for 2018_19
-#> 1 season(s) loaded successfully, containing
-#> 1271 regular season games/87 postseason games
 ```
 
 The available data goes back to the 2010-2011 season as of now, as the
@@ -92,12 +106,12 @@ your plots.
 
 ``` r
 # get single game
-game <- pbp |>
+game <- pbp %>%
   filter(game_date == "2019-04-23" & home_abbreviation == "SJS")
 
 # grab team logos & colors
-team_logos <- hockeyR::team_logos_colors |>
-  filter(team_abbr == unique(game$home_abbreviation) | team_abbr == unique(game$away_abbreviation)) |>
+team_logos <- hockeyR::team_logos_colors %>%
+  filter(team_abbr == unique(game$home_abbreviation) | team_abbr == unique(game$away_abbreviation)) %>%
   # add in dummy variables to put logos on the ice
   mutate(x = ifelse(full_team_name == unique(game$home_name), 50, -50),
          y = 0)
@@ -110,7 +124,7 @@ transparent <- function(img) {
 # get only shot events
 fenwick_events <- c("MISSED_SHOT","SHOT","GOAL")
 
-shots <- game |> filter(event_type %in% fenwick_events) |>
+shots <- game %>% filter(event_type %in% fenwick_events) %>%
   # adding team colors
   left_join(team_logos, by = c("event_team_abbr" = "team_abbr"))
 
