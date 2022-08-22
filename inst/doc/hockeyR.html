@@ -14,7 +14,19 @@
 
 <title>hockeyR</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -24,6 +36,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -125,7 +138,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -146,86 +339,111 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hockeyR)</span></code></pre></div>
 <div id="load_pbp" class="section level2">
 <h2><code>load_pbp()</code></h2>
-<p>As mentioned on the <a href="https://hockeyr.netlify.app/index.html">home</a> page, the main function of the <code>hockeyR</code> package is to load raw NHL play-by-play data without having to scrape it and clean it yourself. The <code>load_pbp()</code> function will do that for you. The <code>season</code> argument in <code>load_pbp()</code> is very accepting. You may use any of the following syntax when loading play-by-play data for the 2020-21 NHL season:</p>
+<p>As mentioned on the <a href="https://hockeyr.netlify.app/index.html">home</a> page, the main
+function of the <code>hockeyR</code> package is to load raw NHL
+play-by-play data without having to scrape it and clean it yourself. The
+<code>load_pbp()</code> function will do that for you. The
+<code>season</code> argument in <code>load_pbp()</code> is very
+accepting. You may use any of the following syntax when loading
+play-by-play data for the 2020-21 NHL season:</p>
 <ul>
 <li>Full season definitions (ie ‘2020-2021’)</li>
 <li>Short seaosn definitions (ie ‘2020-21’)</li>
 <li>Single season definitions (ie 2021)</li>
 </ul>
-<p>To load more than one season, wrap your desired years in <code>c()</code>. That is, to get data for the last two years, one could enter <code>load_pbp(c(2020,2021))</code>.</p>
+<p>To load more than one season, wrap your desired years in
+<code>c()</code>. That is, to get data for the last two years, one could
+enter <code>load_pbp(c(2020,2021))</code>.</p>
 </div>
 <div id="get_game_ids" class="section level2">
 <h2><code>get_game_ids()</code></h2>
-<p>If you want to load play-by-play data for a game that isn’t in the <a href="https://github.com/danmorse314/hockeyR-data">data repository</a>, or perhaps you just want a single game and don’t need to load a full season, you’ll first need to find the numeric game ID. The <code>get_game_ids()</code> function can find it for you as long as you supply it with the date of the game in <code>YYY-MM-DD</code> format. The function defaults to the current date as defined by your operating system.</p>
+<p>If you want to load play-by-play data for a game that isn’t in the <a href="https://github.com/danmorse314/hockeyR-data">data repository</a>,
+or perhaps you just want a single game and don’t need to load a full
+season, you’ll first need to find the numeric game ID. The
+<code>get_game_ids()</code> function can find it for you as long as you
+supply it with the date of the game in <code>YYY-MM-DD</code> format.
+The function defaults to the current date as defined by your operating
+system.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get single day ids</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_game_ids</span>(<span class="at">day =</span> <span class="st">&quot;2017-10-17&quot;</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11 x 8</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       game_id season_full date       home_name            away_name home_final_score</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;                &lt;int&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2017020082 20172018    2017-10-17 New York Rangers     Pittsbur~                4</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2017020083 20172018    2017-10-17 Philadelphia Flyers  Florida ~                5</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2017020084 20172018    2017-10-17 Washington Capitals  Toronto ~                0</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2017020081 20172018    2017-10-17 New Jersey Devils    Tampa Ba~                5</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2017020085 20172018    2017-10-17 Ottawa Senators      Vancouve~                0</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2017020086 20172018    2017-10-17 Nashville Predators  Colorado~                4</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2017020087 20172018    2017-10-17 Winnipeg Jets        Columbus~                2</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2017020088 20172018    2017-10-17 Dallas Stars         Arizona ~                3</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2017020089 20172018    2017-10-17 Edmonton Oilers      Carolina~                3</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2017020090 20172018    2017-10-17 Vegas Golden Knights Buffalo ~                5</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2017020091 20172018    2017-10-17 San Jose Sharks      Montréal~                5</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 2 more variables: away_final_score &lt;int&gt;, game_type &lt;chr&gt;</span></span></code></pre></div>
-<p>You can instead supply a season to <code>get_game_ids()</code> to grab a full year’s worth of IDs as well as final scores, home and road teams, and game dates for each game in the given season.</p>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       game_id season_full date       home_name   away_~1 home_~2 away_~3 game_~4</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;     &lt;int&gt;   &lt;int&gt; &lt;chr&gt;  </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2017020082 20172018    2017-10-17 New York R~ Pittsb~       4       5 REG    </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2017020083 20172018    2017-10-17 Philadelph~ Florid~       5       1 REG    </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2017020084 20172018    2017-10-17 Washington~ Toront~       0       2 REG    </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2017020081 20172018    2017-10-17 New Jersey~ Tampa ~       5       4 REG    </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2017020085 20172018    2017-10-17 Ottawa Sen~ Vancou~       0       3 REG    </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2017020086 20172018    2017-10-17 Nashville ~ Colora~       4       1 REG    </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2017020087 20172018    2017-10-17 Winnipeg J~ Columb~       2       5 REG    </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2017020088 20172018    2017-10-17 Dallas Sta~ Arizon~       3       1 REG    </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2017020089 20172018    2017-10-17 Edmonton O~ Caroli~       3       5 REG    </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2017020090 20172018    2017-10-17 Vegas Gold~ Buffal~       5       4 REG    </span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2017020091 20172018    2017-10-17 San Jose S~ Montré~       5       2 REG    </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with abbreviated variable names 1: away_name, 2: home_final_score,</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   3: away_final_score, 4: game_type</span></span></code></pre></div>
+<p>You can instead supply a season to <code>get_game_ids()</code> to
+grab a full year’s worth of IDs as well as final scores, home and road
+teams, and game dates for each game in the given season.</p>
 </div>
 <div id="scrape_game" class="section level2">
 <h2><code>scrape_game()</code></h2>
-<p>This function scrapes a single game with a supplied game ID, which can be retrieved with <code>get_game_ids()</code>. Live game scraping has yet to undergo testing.</p>
+<p>This function scrapes a single game with a supplied game ID, which
+can be retrieved with <code>get_game_ids()</code>. Live game scraping
+has yet to undergo testing.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_game</span>(<span class="at">game_id =</span> <span class="dv">2020030175</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 718 x 104</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    event_type event secondary_type event_team event_team_type description period</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;           &lt;chr&gt;        &lt;int&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 GAME_SCHE~ Game~ &lt;NA&gt;           &lt;NA&gt;       &lt;NA&gt;            Game Sched~      1</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 CHANGE     Chan~ &lt;NA&gt;           Montréal ~ away            ON: Shea W~      1</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 CHANGE     Chan~ Line change    Toronto M~ home            ON: Wayne ~      1</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 FACEOFF    Face~ &lt;NA&gt;           Toronto M~ home            Auston Mat~      1</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 HIT        Hit   &lt;NA&gt;           Toronto M~ home            Zach Hyman~      1</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 CHANGE     Chan~ On the fly     Montréal ~ away            ON: Jeff P~      1</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 CHANGE     Chan~ On the fly     Toronto M~ home            ON: Alex G~      1</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 CHANGE     Chan~ On the fly     Montréal ~ away            ON: Cole C~      1</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 SHOT       Shot  Wrist Shot     Toronto M~ home            Alex Galch~      1</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 CHANGE     Chan~ On the fly     Toronto M~ home            ON: Jake M~      1</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 708 more rows, and 97 more variables: period_seconds &lt;dbl&gt;,</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   period_seconds_remaining &lt;dbl&gt;, game_seconds &lt;dbl&gt;,</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   game_seconds_remaining &lt;dbl&gt;, home_score &lt;dbl&gt;, away_score &lt;dbl&gt;,</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_1_name &lt;chr&gt;, event_player_1_type &lt;chr&gt;,</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_2_name &lt;chr&gt;, event_player_2_type &lt;chr&gt;,</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_3_name &lt;chr&gt;, event_player_3_type &lt;chr&gt;,</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_goalie_name &lt;chr&gt;, strength_state &lt;glue&gt;, strength_code &lt;chr&gt;, ...</span></span></code></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    event_~1 event secon~2 event~3 event~4 descr~5 period perio~6 perio~7 game_~8</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 GAME_SC~ Game~ &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    Game S~      1       0    1200       0</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 CHANGE   Chan~ &lt;NA&gt;    Montré~ away    ON: Sh~      1       0    1200       0</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 CHANGE   Chan~ Line c~ Toront~ home    ON: Wa~      1       0    1200       0</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 FACEOFF  Face~ &lt;NA&gt;    Toront~ home    Auston~      1       0    1200       0</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 HIT      Hit   &lt;NA&gt;    Toront~ home    Zach H~      1      13    1187      13</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 CHANGE   Chan~ On the~ Montré~ away    ON: Je~      1      24    1176      24</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 CHANGE   Chan~ On the~ Toront~ home    ON: Al~      1      27    1173      27</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 CHANGE   Chan~ On the~ Montré~ away    ON: Co~      1      29    1171      29</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 SHOT     Shot  Wrist ~ Toront~ home    Alex G~      1      32    1168      32</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 CHANGE   Chan~ On the~ Toront~ home    ON: Ja~      1      32    1168      32</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 708 more rows, 94 more variables: game_seconds_remaining &lt;dbl&gt;,</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   home_score &lt;dbl&gt;, away_score &lt;dbl&gt;, event_player_1_name &lt;chr&gt;,</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_1_type &lt;chr&gt;, event_player_2_name &lt;chr&gt;,</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_2_type &lt;chr&gt;, event_player_3_name &lt;chr&gt;,</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_3_type &lt;chr&gt;, event_goalie_name &lt;chr&gt;, strength_state &lt;glue&gt;,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   strength_code &lt;chr&gt;, strength &lt;chr&gt;, game_winning_goal &lt;lgl&gt;,</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   empty_net &lt;lgl&gt;, penalty_severity &lt;chr&gt;, penalty_minutes &lt;int&gt;, ...</span></span></code></pre></div>
 </div>
 <div id="scrape_day" class="section level2">
 <h2><code>scrape_day()</code></h2>
-<p>This is the backbone function that keeps the <a href="https://github.com/danmorse314/hockeyR-data">hockeyR-data repository</a> up to date during the season. Supply a date (<code>YYY-MM-DD</code>) and it will scrape play-by-play data for all games on that day. Live game scraping is still awaiting testing.</p>
+<p>This is the backbone function that keeps the <a href="https://github.com/danmorse314/hockeyR-data">hockeyR-data
+repository</a> up to date during the season. Supply a date
+(<code>YYY-MM-DD</code>) and it will scrape play-by-play data for all
+games on that day. Live game scraping is still awaiting testing.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_day</span>(<span class="st">&quot;2015-01-06&quot;</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6,472 x 105</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    event_type event secondary_type event_team event_team_type description period</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;           &lt;chr&gt;        &lt;int&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 GAME_SCHE~ Game~ &lt;NA&gt;           &lt;NA&gt;       &lt;NA&gt;            Game Sched~      1</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 CHANGE     Chan~ &lt;NA&gt;           Buffalo S~ away            ON: Josh G~      1</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 CHANGE     Chan~ Line change    New Jerse~ home            ON: Patrik~      1</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 FACEOFF    Face~ &lt;NA&gt;           Buffalo S~ away            Zemgus Gir~      1</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 BLOCKED_S~ Bloc~ &lt;NA&gt;           Buffalo S~ away            Andy Green~      1</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 CHANGE     Chan~ On the fly     Buffalo S~ away            ON: Chris ~      1</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 GIVEAWAY   Give~ &lt;NA&gt;           New Jerse~ home            Giveaway b~      1</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 TAKEAWAY   Take~ &lt;NA&gt;           New Jerse~ home            Takeaway b~      1</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 CHANGE     Chan~ On the fly     New Jerse~ home            ON: Mark F~      1</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 CHANGE     Chan~ On the fly     New Jerse~ home            ON: Jaromi~      1</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 6,462 more rows, and 98 more variables: period_seconds &lt;dbl&gt;,</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   period_seconds_remaining &lt;dbl&gt;, game_seconds &lt;dbl&gt;,</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   game_seconds_remaining &lt;dbl&gt;, home_score &lt;dbl&gt;, away_score &lt;dbl&gt;,</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_1_name &lt;chr&gt;, event_player_1_type &lt;chr&gt;,</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_2_name &lt;chr&gt;, event_player_2_type &lt;chr&gt;,</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_3_name &lt;chr&gt;, event_player_3_type &lt;chr&gt;,</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_goalie_name &lt;chr&gt;, strength_state &lt;glue&gt;, strength_code &lt;chr&gt;, ...</span></span></code></pre></div>
-<p>If you can wait until the day after a game, the <code>load_pbp()</code> function is the only one you’ll need. If you’d like to scrape the data yourself immediately following a game, the other functions discussed here will do the job for you.</p>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    event_~1 event secon~2 event~3 event~4 descr~5 period perio~6 perio~7 game_~8</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 GAME_SC~ Game~ &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    Game S~      1       0    1200       0</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 CHANGE   Chan~ &lt;NA&gt;    Buffal~ away    ON: Jo~      1       0    1200       0</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 CHANGE   Chan~ Line c~ New Je~ home    ON: Pa~      1       0    1200       0</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 FACEOFF  Face~ &lt;NA&gt;    Buffal~ away    Zemgus~      1       0    1200       0</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 BLOCKED~ Bloc~ &lt;NA&gt;    Buffal~ away    Andy G~      1      10    1190      10</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 CHANGE   Chan~ On the~ Buffal~ away    ON: Ch~      1      36    1164      36</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 GIVEAWAY Give~ &lt;NA&gt;    New Je~ home    Giveaw~      1      38    1162      38</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 TAKEAWAY Take~ &lt;NA&gt;    New Je~ home    Takeaw~      1      41    1159      41</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 CHANGE   Chan~ On the~ New Je~ home    ON: Ma~      1      41    1159      41</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 CHANGE   Chan~ On the~ New Je~ home    ON: Ja~      1      48    1152      48</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 6,462 more rows, 95 more variables: game_seconds_remaining &lt;dbl&gt;,</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   home_score &lt;dbl&gt;, away_score &lt;dbl&gt;, event_player_1_name &lt;chr&gt;,</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_1_type &lt;chr&gt;, event_player_2_name &lt;chr&gt;,</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_2_type &lt;chr&gt;, event_player_3_name &lt;chr&gt;,</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_3_type &lt;chr&gt;, event_goalie_name &lt;chr&gt;, strength_state &lt;glue&gt;,</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   strength_code &lt;chr&gt;, strength &lt;chr&gt;, game_winning_goal &lt;lgl&gt;,</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   empty_net &lt;lgl&gt;, penalty_severity &lt;chr&gt;, penalty_minutes &lt;int&gt;, ...</span></span></code></pre></div>
+<p>If you can wait until the day after a game, the
+<code>load_pbp()</code> function is the only one you’ll need. If you’d
+like to scrape the data yourself immediately following a game, the other
+functions discussed here will do the job for you.</p>
 </div>
 </div>
 

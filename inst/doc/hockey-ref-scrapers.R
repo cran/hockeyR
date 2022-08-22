@@ -22,45 +22,30 @@ get_team_records(1967) %>%
 get_player_stats_hr(player_name = "Wayne Gretzky", season = 1982) %>%
   dplyr::select(player, age, season_full, tm, gp, g, a, pts)
 
-## ----jerseys------------------------------------------------------------------
-# get every player to wear the desired number
-df <- get_jersey_players(98)
+## ----skater stats-------------------------------------------------------------
+df2 <- get_skater_stats_hr(2022)
 
-# get their statistics from the year they wore that sweater
-df2 <- purrr::map2_dfr(
-  .x = df$player,
-  .y = df$season,
-  ~get_player_stats_hr(player_name = .x, season = .y)
-  )
+df2 %>%
+  dplyr::arrange(-goals) %>%
+  head()
 
-# who had the most goals?
-dplyr::arrange(df2, dplyr::desc(g)) %>%
-  dplyr::select(player, tm, season_full, gp, g, a, pts)
 
 ## ----plot-example-------------------------------------------------------------
 # add colors & logos
 df3 <- df2 %>%
-  dplyr::group_by(player, season_full) %>%
-  # this part is just to get both of Mete's teams into one row
-  dplyr::summarize(
-    gp = sum(gp),
-    pts = sum(pts),
-    pts_gm = pts/gp,
-    tm = utils::tail(tm, n=1),
-    .groups = "drop"
-  ) %>%
-  dplyr::mutate(player_season = glue::glue("{player}\n{season_full}")) %>%
-  dplyr::left_join(team_logos_colors, by = c("tm" = "team_abbr"))
+  dplyr::arrange(-points) %>%
+  dplyr::slice(1:10) %>%dplyr::select(player, team_abbr, goals, assists, points) %>%
+  dplyr::left_join(team_logos_colors, by = "team_abbr")
 
 # make a bar chart
 df3 %>%
-  ggplot2::ggplot(ggplot2::aes(stats::reorder(player_season, -pts_gm), pts_gm)) +
+  ggplot2::ggplot(ggplot2::aes(stats::reorder(player, -points), points)) +
   ggplot2::geom_col(fill = df3$team_color1, color = df3$team_color2) +
   ggimage::geom_image(
-    ggplot2::aes(y = pts_gm + .027, image = team_logo_espn),
-    size = .07, asp = 1.5
+    ggplot2::aes(y = points + 2, image = team_logo_espn),
+    size = .05, asp = 1.5
   ) +
-  ggplot2::geom_text(ggplot2::aes(y = 0.01, label = player_season),
+  ggplot2::geom_text(ggplot2::aes(y = 2, label = player),
             color = "white", angle = 90, hjust = 0) +
   ggplot2::scale_y_continuous(breaks = scales::pretty_breaks()) +
   ggplot2::theme(
@@ -72,8 +57,8 @@ df3 %>%
     axis.text.y = ggplot2::element_text(color = "white"),
     title = ggplot2::element_text(color = "white")
   ) +
-  ggplot2::labs(x = NULL, y = "Points per game",
-       title = "Most productive NHL seasons wearing #98",
+  ggplot2::labs(x = NULL, y = "Points",
+       title = "Top-10 point scorers in the NHL in 2021-22",
        caption = "data pulled from hockey-reference.com using hockeyR")
 
 ## ----rosters------------------------------------------------------------------
