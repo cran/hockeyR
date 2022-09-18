@@ -1,3 +1,32 @@
+# hockeyR 1.2.0
+
+## New functions added
+* `calculate_toi` calculates the time on ice for all skaters in a supplied play-by-play set
+* `calculate_on_ice` calculates player on-ice statistics for all skaters in a supplied play-by-play set
+* `calculate_individual` calculates player individual statistics for all skaters in a supplied play-by-play set
+* `get_standings` pulls standings and team stats for given seasons from [NHL.com](https://www.nhl.com/)
+
+
+## Function updates
+* `get_game_ids` now returns column for scheduled start time for each game
+* `%not_in%` operator now defined globally within package
+
+## Bug fixes
+* `get_draft_class` now works for classes prior to 1983 (first year player IDs existed)
+
+# hockeyR 1.1.0
+
+## New addition:
+* Play-by-play data loaded through `load_pbp` includes new column for expected goals
+* Details on & code to create the hockeyR expected goals model can be found [here](https://github.com/danmorse314/hockeyR-models)
+* The `scrape_game` function has been adjusted to automatically add expected goals to the output
+
+## New function:
+* `calculate_xg` adds expected goals column to pbp data (used inside `scrape_game`, not necessary to use this to get expected goal values)
+
+## Fixes:
+* Changed the `player_id` column in `get_draft_class` to `prospect_id` - proper NHL `player_id` column only returns with `player_details` set to `TRUE`
+
 # hockeyR 1.0.0
 * The `scrape_game()` function runs about 4x faster now
 

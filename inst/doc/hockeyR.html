@@ -120,13 +120,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -366,22 +373,22 @@ The function defaults to the current date as defined by your operating
 system.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get single day ids</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_game_ids</span>(<span class="at">day =</span> <span class="st">&quot;2017-10-17&quot;</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11 x 8</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       game_id season_full date       home_name   away_~1 home_~2 away_~3 game_~4</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;     &lt;int&gt;   &lt;int&gt; &lt;chr&gt;  </span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2017020082 20172018    2017-10-17 New York R~ Pittsb~       4       5 REG    </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2017020083 20172018    2017-10-17 Philadelph~ Florid~       5       1 REG    </span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2017020084 20172018    2017-10-17 Washington~ Toront~       0       2 REG    </span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2017020081 20172018    2017-10-17 New Jersey~ Tampa ~       5       4 REG    </span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2017020085 20172018    2017-10-17 Ottawa Sen~ Vancou~       0       3 REG    </span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2017020086 20172018    2017-10-17 Nashville ~ Colora~       4       1 REG    </span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2017020087 20172018    2017-10-17 Winnipeg J~ Columb~       2       5 REG    </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2017020088 20172018    2017-10-17 Dallas Sta~ Arizon~       3       1 REG    </span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2017020089 20172018    2017-10-17 Edmonton O~ Caroli~       3       5 REG    </span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2017020090 20172018    2017-10-17 Vegas Gold~ Buffal~       5       4 REG    </span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2017020091 20172018    2017-10-17 San Jose S~ Montré~       5       2 REG    </span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with abbreviated variable names 1: away_name, 2: home_final_score,</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   3: away_final_score, 4: game_type</span></span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11 x 9</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       game_id season_full date   game_~1 home_~2 away_~3 home_~4 away_~5 game_~6</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;   &lt;int&gt; &lt;chr&gt;  </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 2017020082 20172018    2017-~ 07:00 ~ New Yo~ Pittsb~       4       5 REG    </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 2017020083 20172018    2017-~ 07:00 ~ Philad~ Florid~       5       1 REG    </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 2017020084 20172018    2017-~ 07:00 ~ Washin~ Toront~       0       2 REG    </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 2017020081 20172018    2017-~ 07:30 ~ New Je~ Tampa ~       5       4 REG    </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 2017020085 20172018    2017-~ 07:30 ~ Ottawa~ Vancou~       0       3 REG    </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 2017020086 20172018    2017-~ 08:00 ~ Nashvi~ Colora~       4       1 REG    </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 2017020087 20172018    2017-~ 08:00 ~ Winnip~ Columb~       2       5 REG    </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 2017020088 20172018    2017-~ 08:30 ~ Dallas~ Arizon~       3       1 REG    </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 2017020089 20172018    2017-~ 09:00 ~ Edmont~ Caroli~       3       5 REG    </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 2017020090 20172018    2017-~ 10:00 ~ Vegas ~ Buffal~       5       4 REG    </span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 2017020091 20172018    2017-~ 10:30 ~ San Jo~ Montré~       5       2 REG    </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with abbreviated variable names 1: game_time, 2: home_name, 3: away_name,</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   4: home_final_score, 5: away_final_score, 6: game_type</span></span></code></pre></div>
 <p>You can instead supply a season to <code>get_game_ids()</code> to
 grab a full year’s worth of IDs as well as final scores, home and road
 teams, and game dates for each game in the given season.</p>
@@ -392,26 +399,26 @@ teams, and game dates for each game in the given season.</p>
 can be retrieved with <code>get_game_ids()</code>. Live game scraping
 has yet to undergo testing.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_game</span>(<span class="at">game_id =</span> <span class="dv">2020030175</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 718 x 104</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    event_~1 event secon~2 event~3 event~4 descr~5 period perio~6 perio~7 game_~8</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 GAME_SC~ Game~ &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    Game S~      1       0    1200       0</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 CHANGE   Chan~ &lt;NA&gt;    Montré~ away    ON: Sh~      1       0    1200       0</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 CHANGE   Chan~ Line c~ Toront~ home    ON: Wa~      1       0    1200       0</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 FACEOFF  Face~ &lt;NA&gt;    Toront~ home    Auston~      1       0    1200       0</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 HIT      Hit   &lt;NA&gt;    Toront~ home    Zach H~      1      13    1187      13</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 CHANGE   Chan~ On the~ Montré~ away    ON: Je~      1      24    1176      24</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 CHANGE   Chan~ On the~ Toront~ home    ON: Al~      1      27    1173      27</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 CHANGE   Chan~ On the~ Montré~ away    ON: Co~      1      29    1171      29</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 SHOT     Shot  Wrist ~ Toront~ home    Alex G~      1      32    1168      32</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 CHANGE   Chan~ On the~ Toront~ home    ON: Ja~      1      32    1168      32</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 708 more rows, 94 more variables: game_seconds_remaining &lt;dbl&gt;,</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   home_score &lt;dbl&gt;, away_score &lt;dbl&gt;, event_player_1_name &lt;chr&gt;,</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_1_type &lt;chr&gt;, event_player_2_name &lt;chr&gt;,</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_2_type &lt;chr&gt;, event_player_3_name &lt;chr&gt;,</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_3_type &lt;chr&gt;, event_goalie_name &lt;chr&gt;, strength_state &lt;glue&gt;,</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   strength_code &lt;chr&gt;, strength &lt;chr&gt;, game_winning_goal &lt;lgl&gt;,</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   empty_net &lt;lgl&gt;, penalty_severity &lt;chr&gt;, penalty_minutes &lt;int&gt;, ...</span></span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 718 x 108</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         xg event_id event~1 event secon~2 event~3 event~4 descr~5 period perio~6</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 NA       2.02e13 GAME_S~ Game~ &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    Game S~      1       0</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 NA       2.02e13 CHANGE  Chan~ &lt;NA&gt;    Montré~ away    ON: Sh~      1       0</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 NA       2.02e13 CHANGE  Chan~ Line c~ Toront~ home    ON: Wa~      1       0</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 NA       2.02e13 FACEOFF Face~ &lt;NA&gt;    Toront~ home    Auston~      1       0</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 NA       2.02e13 HIT     Hit   &lt;NA&gt;    Toront~ home    Zach H~      1      13</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 NA       2.02e13 CHANGE  Chan~ On the~ Montré~ away    ON: Je~      1      24</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 NA       2.02e13 CHANGE  Chan~ On the~ Toront~ home    ON: Al~      1      27</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 NA       2.02e13 CHANGE  Chan~ On the~ Montré~ away    ON: Co~      1      29</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9  0.0921  2.02e13 SHOT    Shot  Wrist ~ Toront~ home    Alex G~      1      32</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 NA       2.02e13 CHANGE  Chan~ On the~ Toront~ home    ON: Ja~      1      32</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 708 more rows, 98 more variables: period_seconds_remaining &lt;dbl&gt;,</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   game_seconds &lt;dbl&gt;, game_seconds_remaining &lt;dbl&gt;, home_score &lt;dbl&gt;,</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   away_score &lt;dbl&gt;, event_player_1_name &lt;chr&gt;, event_player_1_type &lt;chr&gt;,</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_2_name &lt;chr&gt;, event_player_2_type &lt;chr&gt;,</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_3_name &lt;chr&gt;, event_player_3_type &lt;chr&gt;,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_goalie_name &lt;chr&gt;, strength_state &lt;glue&gt;, strength_code &lt;chr&gt;,</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   strength &lt;chr&gt;, game_winning_goal &lt;lgl&gt;, empty_net &lt;lgl&gt;, ...</span></span></code></pre></div>
 </div>
 <div id="scrape_day" class="section level2">
 <h2><code>scrape_day()</code></h2>
@@ -420,26 +427,26 @@ repository</a> up to date during the season. Supply a date
 (<code>YYY-MM-DD</code>) and it will scrape play-by-play data for all
 games on that day. Live game scraping is still awaiting testing.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scrape_day</span>(<span class="st">&quot;2015-01-06&quot;</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6,472 x 105</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    event_~1 event secon~2 event~3 event~4 descr~5 period perio~6 perio~7 game_~8</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 GAME_SC~ Game~ &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    Game S~      1       0    1200       0</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 CHANGE   Chan~ &lt;NA&gt;    Buffal~ away    ON: Jo~      1       0    1200       0</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 CHANGE   Chan~ Line c~ New Je~ home    ON: Pa~      1       0    1200       0</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 FACEOFF  Face~ &lt;NA&gt;    Buffal~ away    Zemgus~      1       0    1200       0</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 BLOCKED~ Bloc~ &lt;NA&gt;    Buffal~ away    Andy G~      1      10    1190      10</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 CHANGE   Chan~ On the~ Buffal~ away    ON: Ch~      1      36    1164      36</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 GIVEAWAY Give~ &lt;NA&gt;    New Je~ home    Giveaw~      1      38    1162      38</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 TAKEAWAY Take~ &lt;NA&gt;    New Je~ home    Takeaw~      1      41    1159      41</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 CHANGE   Chan~ On the~ New Je~ home    ON: Ma~      1      41    1159      41</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 CHANGE   Chan~ On the~ New Je~ home    ON: Ja~      1      48    1152      48</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 6,462 more rows, 95 more variables: game_seconds_remaining &lt;dbl&gt;,</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   home_score &lt;dbl&gt;, away_score &lt;dbl&gt;, event_player_1_name &lt;chr&gt;,</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_1_type &lt;chr&gt;, event_player_2_name &lt;chr&gt;,</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_2_type &lt;chr&gt;, event_player_3_name &lt;chr&gt;,</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_3_type &lt;chr&gt;, event_goalie_name &lt;chr&gt;, strength_state &lt;glue&gt;,</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   strength_code &lt;chr&gt;, strength &lt;chr&gt;, game_winning_goal &lt;lgl&gt;,</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   empty_net &lt;lgl&gt;, penalty_severity &lt;chr&gt;, penalty_minutes &lt;int&gt;, ...</span></span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6,472 x 109</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       xg event_id event_t~1 event secon~2 event~3 event~4 descr~5 period perio~6</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1    NA  2.01e13 GAME_SCH~ Game~ &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    Game S~      1       0</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2    NA  2.01e13 CHANGE    Chan~ &lt;NA&gt;    Buffal~ away    ON: Jo~      1       0</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3    NA  2.01e13 CHANGE    Chan~ Line c~ New Je~ home    ON: Pa~      1       0</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4    NA  2.01e13 FACEOFF   Face~ &lt;NA&gt;    Buffal~ away    Zemgus~      1       0</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5    NA  2.01e13 BLOCKED_~ Bloc~ &lt;NA&gt;    Buffal~ away    Andy G~      1      10</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6    NA  2.01e13 CHANGE    Chan~ On the~ Buffal~ away    ON: Ch~      1      36</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7    NA  2.01e13 GIVEAWAY  Give~ &lt;NA&gt;    New Je~ home    Giveaw~      1      38</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8    NA  2.01e13 TAKEAWAY  Take~ &lt;NA&gt;    New Je~ home    Takeaw~      1      41</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9    NA  2.01e13 CHANGE    Chan~ On the~ New Je~ home    ON: Ma~      1      41</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10    NA  2.01e13 CHANGE    Chan~ On the~ New Je~ home    ON: Ja~      1      48</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ... with 6,462 more rows, 99 more variables: period_seconds_remaining &lt;dbl&gt;,</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   game_seconds &lt;dbl&gt;, game_seconds_remaining &lt;dbl&gt;, home_score &lt;dbl&gt;,</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   away_score &lt;dbl&gt;, event_player_1_name &lt;chr&gt;, event_player_1_type &lt;chr&gt;,</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_2_name &lt;chr&gt;, event_player_2_type &lt;chr&gt;,</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_player_3_name &lt;chr&gt;, event_player_3_type &lt;chr&gt;,</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   event_goalie_name &lt;chr&gt;, strength_state &lt;glue&gt;, strength_code &lt;chr&gt;,</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   strength &lt;chr&gt;, game_winning_goal &lt;lgl&gt;, empty_net &lt;lgl&gt;, ...</span></span></code></pre></div>
 <p>If you can wait until the day after a game, the
 <code>load_pbp()</code> function is the only one you’ll need. If you’d
 like to scrape the data yourself immediately following a game, the other

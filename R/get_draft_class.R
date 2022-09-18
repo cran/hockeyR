@@ -30,8 +30,6 @@
 #' }
 get_draft_class <- function(draft_year = as.numeric(format(Sys.Date()-181, "%Y")), player_details = FALSE){
 
-  `%not_in%` <- purrr::negate(`%in%`)
-
   if(draft_year %not_in% 1963:as.numeric(format(Sys.Date()-181, "%Y"))){
     stop(paste("No NHL Entry Draft data found for the year",draft_year))
   }
@@ -68,13 +66,20 @@ get_draft_class <- function(draft_year = as.numeric(format(Sys.Date()-181, "%Y")
       -year,-id, -link
     ) %>%
     tidyr::unnest_wider(prospect) %>%
-    janitor::clean_names() %>%
-    dplyr::rename(
-      player_id = id, player = full_name, player_link = link,
-      full_team_name = name
-    )
+    janitor::clean_names()
 
-  if(player_details == TRUE) {
+  if("id" %in% names(df)){
+    df <- df %>%
+      dplyr::rename(
+        prospect_id = id, player = full_name, player_link = link,
+        full_team_name = name
+      )
+  }
+
+  if(player_details == TRUE & draft_year > 1982) {
+    # player ids didn't exist til 1983
+    # no details can be retrieved before then
+
     # add player details
     details <- NULL
     for(i in unique(df$player_link)){
@@ -87,7 +92,7 @@ get_draft_class <- function(draft_year = as.numeric(format(Sys.Date()-181, "%Y")
           dplyr::tibble() %>%
           tidyr::unnest_wider(1) %>%
           dplyr::select(-fullName, -link) %>%
-          dplyr::rename(player_id = id) %>%
+          dplyr::rename(prospect_id = id) %>%
           tidyr::unnest_wider(primaryPosition) %>%
           dplyr::rename(
             position = abbreviation
@@ -119,9 +124,10 @@ get_draft_class <- function(draft_year = as.numeric(format(Sys.Date()-181, "%Y")
       details <- dplyr::bind_rows(details, details_df)
     }
 
-    details <- janitor::clean_names(details)
+    details <- janitor::clean_names(details) %>%
+      dplyr::rename(player_id = nhl_player_id)
 
-    df <- dplyr::left_join(df, details, by = "player_id")
+    df <- dplyr::left_join(df, details, by = "prospect_id")
   }
 
   return(df)
